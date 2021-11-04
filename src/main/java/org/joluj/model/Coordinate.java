@@ -56,6 +56,24 @@ public class Coordinate {
     return z;
   }
 
+  public double getDistance(Coordinate other) {
+    double x = this.x - other.x;
+    double y = this.y - other.y;
+    double z = this.z - other.z;
+    return Math.sqrt(x * x + y * y + z * z);
+  }
+
+  public boolean isEqual(Coordinate other) {
+    return this.x == other.x && this.y == other.y && this.z == other.z;
+  }
+
+  public boolean equals(Object other) {
+    if (other instanceof Coordinate) {
+      return this.isEqual((Coordinate) other);
+    }
+    return false;
+  }
+
   /**
    * Returns the Coordinate as String representation after the following scheme:
    * "cartesian|x|y|z" where x,y,z are the attributes from the object. "cartesian"
