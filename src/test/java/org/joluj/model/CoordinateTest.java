@@ -9,12 +9,27 @@ public class CoordinateTest {
   static double DELTA = 0.000001;
 
   @Test
-  public void testSuccessfulCreationFromString() {
+  public void creationFromString() {
     var expected = new Coordinate(1, 2.3, 4.5);
     var actual = Coordinate.FromString("cartesian|1|2.3|4.5");
     assertEquals(expected.getX(), actual.getX(), DELTA);
     assertEquals(expected.getY(), actual.getY(), DELTA);
     assertEquals(expected.getZ(), actual.getZ(), DELTA);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void creationFromString_TooManyCoordinated() {
+    Coordinate.FromString("cartesian|1|2.3|4.5|6.7");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void creationFromString_TooViewCoordinated() {
+    Coordinate.FromString("cartesian|1|2.3");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void creationFromString_WrongCoordinateType() {
+    Coordinate.FromString("wrong|1|2.3|4.5");
   }
 
   @Test
