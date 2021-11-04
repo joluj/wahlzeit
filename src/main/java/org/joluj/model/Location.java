@@ -1,7 +1,7 @@
 package org.joluj.model;
 
 public class Location {
-  public Coordinate coordinate;
+  private final Coordinate coordinate;
 
   /**
    * @throws IllegalArgumentException if coordinate is null
@@ -19,6 +19,10 @@ public class Location {
    */
   public static Location FromString(String location) {
     return new Location(Coordinate.FromString(location));
+  }
+
+  public Coordinate getCoordinate() {
+    return coordinate;
   }
 
   public String toString() {
