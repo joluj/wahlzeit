@@ -19,10 +19,10 @@ public class Coordinate {
    * @param coordinate string representation of the coordinate
    * @throws IllegalArgumentException if the string is not parsable
    */
-  public Coordinate(String coordinate) {
+  public static Coordinate FromString(String coordinate) {
     if (coordinate == null || coordinate.isEmpty()) {
       // Coordinate is empty / not initialized
-      return;
+      return new Coordinate(0, 0, 0);
     }
 
     String[] parts = coordinate.split("\\|");
@@ -32,9 +32,11 @@ public class Coordinate {
     }
 
     try {
-      this.x = Double.parseDouble(parts[1]);
-      this.y = Double.parseDouble(parts[2]);
-      this.z = Double.parseDouble(parts[3]);
+      double x = Double.parseDouble(parts[1]);
+      double y = Double.parseDouble(parts[2]);
+      double z = Double.parseDouble(parts[3]);
+
+      return new Coordinate(x, y, z);
     } catch (NullPointerException | NumberFormatException e) {
       // Catch Exceptions and rethrow as IllegalArgumentException to match JavaDoc.
       throw new IllegalArgumentException("Incorrect String representation.", e);

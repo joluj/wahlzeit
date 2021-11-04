@@ -11,7 +11,7 @@ public class CoordinateTest {
   @Test
   public void testSuccessfulCreationFromString() {
     var expected = new Coordinate(1, 2.3, 4.5);
-    var actual = new Coordinate("cartesian|1|2.3|4.5");
+    var actual = Coordinate.FromString("cartesian|1|2.3|4.5");
     assertEquals(expected.getX(), actual.getX(), DELTA);
     assertEquals(expected.getY(), actual.getY(), DELTA);
     assertEquals(expected.getZ(), actual.getZ(), DELTA);
@@ -19,7 +19,7 @@ public class CoordinateTest {
 
   @Test
   public void toStringMethod() {
-    var actual = new Coordinate("cartesian|1|2.3|4.5");
+    var actual = Coordinate.FromString("cartesian|1|2.3|4.5");
     assertEquals("cartesian|1.0|2.3|4.5", actual.toString());
   }
 }

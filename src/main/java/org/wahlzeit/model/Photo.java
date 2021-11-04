@@ -156,7 +156,7 @@ public class Photo extends DataObject {
     String locationFromDb = rset.getString("location");
     // Only create a location object if the location was set
     if (locationFromDb != null && !locationFromDb.isEmpty()) {
-      this.location = new Location(locationFromDb);
+      this.location = Location.FromString(locationFromDb);
     }
   }
 

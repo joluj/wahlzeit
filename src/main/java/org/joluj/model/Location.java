@@ -17,8 +17,8 @@ public class Location {
    * Creates a Location object from a string.
    * The string must follow {@link Coordinate#toString() this scheme}.
    */
-  public Location(String location) {
-    this.coordinate = new Coordinate(location);
+  public static Location FromString(String location) {
+    return new Location(Coordinate.FromString(location));
   }
 
   public String toString() {
