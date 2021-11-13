@@ -2,6 +2,11 @@ package org.joluj.model;
 
 public class Coordinate {
 
+  /**
+   * Default allowed delta for double comparison for {@link #isEqual(Coordinate)}
+   */
+  private static final double EPSILON = 0.000001;
+
   private double x;
   private double y;
   private double z;
@@ -64,7 +69,15 @@ public class Coordinate {
   }
 
   public boolean isEqual(Coordinate other) {
-    return this.x == other.x && this.y == other.y && this.z == other.z;
+    return this.isEqual(other, EPSILON);
+  }
+
+  /**
+   * returns true, if the distance to the other coordinate is
+   * smaller than epsilon.
+   */
+  public boolean isEqual(Coordinate other, double epsilon) {
+    return this.getDistance(other) < epsilon;
   }
 
   public boolean equals(Object other) {
