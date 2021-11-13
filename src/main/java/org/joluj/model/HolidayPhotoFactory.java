@@ -27,6 +27,7 @@ public class HolidayPhotoFactory extends PhotoFactory {
   /**
    * @methodtype factory
    */
+  @Override
   public HolidayPhoto createPhoto() {
     return new HolidayPhoto();
   }
@@ -34,6 +35,7 @@ public class HolidayPhotoFactory extends PhotoFactory {
   /**
    * @methodtype factory
    */
+  @Override
   public HolidayPhoto createPhoto(PhotoId id) {
     return new HolidayPhoto(id);
   }
@@ -41,6 +43,7 @@ public class HolidayPhotoFactory extends PhotoFactory {
   /**
    * @methodtype factory
    */
+  @Override
   public HolidayPhoto createPhoto(ResultSet rs) throws SQLException {
     return new HolidayPhoto(rs);
   }

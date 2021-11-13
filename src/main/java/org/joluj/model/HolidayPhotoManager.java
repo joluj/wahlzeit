@@ -17,7 +17,7 @@ public class HolidayPhotoManager extends PhotoManager {
     photoTagCollector = HolidayPhotoFactory.getInstance().createPhotoTagCollector();
   }
 
-
+  @Override
   protected HolidayPhoto createObject(ResultSet rset) throws SQLException {
     return HolidayPhotoFactory.getInstance().createPhoto(rset);
   }

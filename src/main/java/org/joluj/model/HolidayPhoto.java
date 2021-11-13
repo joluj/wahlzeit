@@ -32,7 +32,6 @@ public class HolidayPhoto extends Photo {
     super(rset);
   }
 
-
   public String getCountry() {
     return country;
   }
