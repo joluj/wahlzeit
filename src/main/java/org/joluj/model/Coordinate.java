@@ -1,5 +1,7 @@
 package org.joluj.model;
 
+import java.util.Objects;
+
 public class Coordinate {
 
   /**
@@ -80,11 +82,17 @@ public class Coordinate {
     return this.getDistance(other) < epsilon;
   }
 
+  @Override
   public boolean equals(Object other) {
     if (other instanceof Coordinate) {
       return this.isEqual((Coordinate) other);
     }
     return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y, z);
   }
 
   /**
