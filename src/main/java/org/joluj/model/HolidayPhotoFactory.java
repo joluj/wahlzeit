@@ -6,6 +6,9 @@ import org.wahlzeit.model.PhotoId;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * A singleton instance of this class exists in {@link PhotoFactory#instance}.
+ */
 public class HolidayPhotoFactory extends PhotoFactory {
 
   /**

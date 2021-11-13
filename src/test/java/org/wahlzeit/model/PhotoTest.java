@@ -4,8 +4,7 @@ import org.joluj.model.Coordinate;
 import org.joluj.model.Location;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PhotoTest {
 
@@ -17,5 +16,7 @@ public class PhotoTest {
     assertNull(photo.getLocation());
     photo.setLocation(location);
     assertEquals(photo.getLocation(), location);
+
+    assertTrue(photo.isDirty());
   }
 }

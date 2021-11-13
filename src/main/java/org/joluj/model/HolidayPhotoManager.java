@@ -6,6 +6,9 @@ import org.wahlzeit.services.SysLog;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * A singleton instance of this class exists in {@link PhotoManager#instance}.
+ */
 public class HolidayPhotoManager extends PhotoManager {
 
   public HolidayPhotoManager() {
