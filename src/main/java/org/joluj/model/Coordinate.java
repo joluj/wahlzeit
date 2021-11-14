@@ -5,14 +5,27 @@ import java.util.Objects;
 public class Coordinate {
 
   /**
-   * Default allowed delta for double comparison for {@link #isEqual(Coordinate)}
+   * Default allowed distance (in meters).
    */
-  private static final double EPSILON = 0.000001;
+  private static final double EPSILON = 1;
 
+  /**
+   * x-coordinate in meters
+   */
   private double x;
+  /**
+   * y-coordinate in meters
+   */
   private double y;
+  /**
+   * z-coordinate in meters
+   */
   private double z;
 
+  /**
+   * Creates a Coordinate following the cartesian scheme (with center of earth = [0,0,0]).
+   * The params are in meters.
+   */
   public Coordinate(double x, double y, double z) {
     this.x = x;
     this.y = y;
@@ -63,6 +76,9 @@ public class Coordinate {
     return z;
   }
 
+  /**
+   * Returns the distance of this coordinate to other in meters
+   */
   public double getDistance(Coordinate other) {
     double x = this.x - other.x;
     double y = this.y - other.y;
@@ -70,6 +86,10 @@ public class Coordinate {
     return Math.sqrt(x * x + y * y + z * z);
   }
 
+  /**
+   * Returns true, if the distance to the other coordinate is
+   * smaller than 1 meter.
+   */
   public boolean isEqual(Coordinate other) {
     return this.isEqual(other, EPSILON);
   }
@@ -92,7 +112,17 @@ public class Coordinate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(x, y, z);
+    // Custom implementation since the hashCodes should be equal for objects that are
+    // equal according to #equals.
+    // This implementation does have a higher hash collision that traditional approaches
+    // that calculate with large primes. However, this implementation fits the purpose of this
+    // class and is faster than calculating with large primes.
+
+    int a = (int) Math.round(this.x);
+    int b = (int) Math.round(this.y);
+    int c = (int) Math.round(this.z);
+
+    return a + b + c;
   }
 
   /**
