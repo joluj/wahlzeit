@@ -15,17 +15,17 @@ public class Location {
 
   /**
    * Creates a Location object from a string.
-   * The string must follow {@link Coordinate#toString() this scheme}.
+   * The string must follow {@link Coordinate#serialize this scheme}.
    */
-  public static Location FromString(String location) {
-    return new Location(Coordinate.FromString(location));
+  public static Location Deserialize(String location) {
+    return new Location(Coordinate.Deserialize(location));
   }
 
   public Coordinate getCoordinate() {
     return coordinate;
   }
 
-  public String toString() {
-    return this.coordinate.toString();
+  public String serialize() {
+    return this.coordinate.serialize();
   }
 }

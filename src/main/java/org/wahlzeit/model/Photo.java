@@ -156,7 +156,7 @@ public class Photo extends DataObject {
     String locationFromDb = rset.getString("location");
     // Only create a location object if the location was set
     if (locationFromDb != null && !locationFromDb.isEmpty()) {
-      this.location = Location.FromString(locationFromDb);
+      this.location = Location.Deserialize(locationFromDb);
     }
   }
 
@@ -179,7 +179,7 @@ public class Photo extends DataObject {
     rset.updateInt("no_votes", noVotes);
     rset.updateLong("creation_time", creationTime);
 
-    rset.updateString("location", location == null ? null : location.toString());
+    rset.updateString("location", location == null ? null : location.serialize());
   }
 
   /**
