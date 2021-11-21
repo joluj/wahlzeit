@@ -77,23 +77,25 @@ public class CartesianCoordinate implements Coordinate {
   /**
    * Returns true, if the distance to the other coordinate is
    * smaller than 1 meter.
+   *
+   * @throws NullPointerException if other is null
    */
-  public boolean isEqual(CartesianCoordinate other) {
-    return this.isEqual(other, EPSILON);
+  public boolean isEqual(Coordinate other) {
+    return this.isEqual(other.asCartesianCoordinate(), EPSILON);
   }
 
   /**
    * returns true, if the distance to the other coordinate is
    * smaller than epsilon.
    */
-  public boolean isEqual(CartesianCoordinate other, double epsilon) {
+  public boolean isEqual(Coordinate other, double epsilon) {
     return this.getCartesianDistance(other) < epsilon;
   }
 
   @Override
   public boolean equals(Object other) {
-    if (other instanceof CartesianCoordinate) {
-      return this.isEqual((CartesianCoordinate) other);
+    if (other instanceof Coordinate) {
+      return this.isEqual((Coordinate) other);
     }
     return false;
   }
@@ -130,9 +132,6 @@ public class CartesianCoordinate implements Coordinate {
     return this;
   }
 
-  /**
-   * Returns the distance of this coordinate to other in meters
-   */
   @Override
   public double getCartesianDistance(Coordinate other) {
     var otherCartesian = other.asCartesianCoordinate();
@@ -144,18 +143,15 @@ public class CartesianCoordinate implements Coordinate {
 
   @Override
   public SphericCoordinate asSphericCoordinate() {
-    // TODO
-    return null;
+    double radius = Math.sqrt(x * x + y * y + z * z);
+    double phi = Math.atan(y / x);
+    double theta = Math.acos(z / radius);
+
+    return new SphericCoordinate(phi, theta, radius);
   }
 
   @Override
   public double getCentralAngle(Coordinate other) {
     return this.asSphericCoordinate().getCentralAngle(other);
-  }
-
-  @Override
-  public boolean isEqual(Coordinate other) {
-    // TODO
-    return false;
   }
 }

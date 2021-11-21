@@ -3,16 +3,18 @@ package org.joluj.model;
 public interface Coordinate {
   public CartesianCoordinate asCartesianCoordinate();
 
+  /**
+   * @throws NullPointerException if other is null
+   */
   public double getCartesianDistance(Coordinate other);
 
   public SphericCoordinate asSphericCoordinate();
 
+  /**
+   * @throws NullPointerException if other is null
+   */
   public double getCentralAngle(Coordinate other);
 
-  /**
-   * Returns true, if the distance to the other coordinate is
-   * smaller than 1 meter.
-   */
   public boolean isEqual(Coordinate other);
 
   /**

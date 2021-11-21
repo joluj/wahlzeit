@@ -2,20 +2,37 @@ package org.joluj.model;
 
 public class SphericCoordinate implements Coordinate {
 
+  /**
+   * 0 <= phi <= 2*PI
+   */
   private final double phi;
+  /**
+   * 0 <= theta <= PI
+   */
   private final double theta;
+  /**
+   * 0 <= radius
+   */
   private final double radius;
 
   public SphericCoordinate(double phi, double theta, double radius) {
-    this.phi = phi;
-    this.theta = theta;
+    if (radius < 0) {
+      throw new IllegalArgumentException("Radius must be >=0");
+    }
+
+    this.phi = phi % (2 * Math.PI);
+    this.theta = theta % (Math.PI);
     this.radius = radius;
+
   }
 
   @Override
   public CartesianCoordinate asCartesianCoordinate() {
-    // TODO
-    return null;
+    double x = radius * Math.sin(theta) * Math.cos(phi);
+    double y = radius * Math.sin(theta) * Math.sin(phi);
+    double z = radius * Math.cos(theta);
+
+    return new CartesianCoordinate(x, y, z);
   }
 
   @Override
@@ -30,8 +47,17 @@ public class SphericCoordinate implements Coordinate {
 
   @Override
   public double getCentralAngle(Coordinate other) {
-    // TODO
-    return 0;
+    if (isEqual(other)) return 0;
+
+    var otherSpheric = other.asSphericCoordinate();
+    double dPhi = this.phi - otherSpheric.phi;
+    double thetaA = Math.PI / 2 - theta;
+    double thetaB = Math.PI / 2 - otherSpheric.theta;
+    
+    return Math.acos(
+        Math.sin(thetaA) * Math.sin(thetaB)
+            + Math.cos(thetaA) * Math.cos(thetaB) * Math.cos(Math.abs(dPhi))
+    );
   }
 
   @Override

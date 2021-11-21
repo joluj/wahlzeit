@@ -102,4 +102,13 @@ public class CartesianCoordinateTest {
     assertEquals(a.getCartesianDistance(c), 1, DELTA);
     assertEquals(a.getCartesianDistance(d), 1, DELTA);
   }
+
+  @Test
+  public void testAsSpheric() {
+    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758);
+    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+
+    assertTrue(cartesian.asSphericCoordinate().isEqual(spherical));
+    assertTrue(cartesian.isEqual(spherical));
+  }
 }
