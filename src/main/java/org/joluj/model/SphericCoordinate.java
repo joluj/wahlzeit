@@ -1,6 +1,6 @@
 package org.joluj.model;
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 
   /**
    * 0 <= phi <= 2*PI
@@ -36,11 +36,6 @@ public class SphericCoordinate implements Coordinate {
   }
 
   @Override
-  public double getCartesianDistance(Coordinate other) {
-    return this.asCartesianCoordinate().getCartesianDistance(other);
-  }
-
-  @Override
   public SphericCoordinate asSphericCoordinate() {
     return this;
   }
@@ -53,16 +48,11 @@ public class SphericCoordinate implements Coordinate {
     double dPhi = this.phi - otherSpheric.phi;
     double thetaA = Math.PI / 2 - theta;
     double thetaB = Math.PI / 2 - otherSpheric.theta;
-    
+
     return Math.acos(
         Math.sin(thetaA) * Math.sin(thetaB)
             + Math.cos(thetaA) * Math.cos(thetaB) * Math.cos(Math.abs(dPhi))
     );
-  }
-
-  @Override
-  public boolean isEqual(Coordinate other) {
-    return this.asCartesianCoordinate().isEqual(other);
   }
 
   public static SphericCoordinate Deserialize(String str) {

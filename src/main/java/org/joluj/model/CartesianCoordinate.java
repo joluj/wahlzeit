@@ -1,6 +1,6 @@
 package org.joluj.model;
 
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
 
   /**
    * Default allowed distance (in meters).
@@ -148,10 +148,5 @@ public class CartesianCoordinate implements Coordinate {
     double theta = Math.acos(z / radius);
 
     return new SphericCoordinate(phi, theta, radius);
-  }
-
-  @Override
-  public double getCentralAngle(Coordinate other) {
-    return this.asSphericCoordinate().getCentralAngle(other);
   }
 }
