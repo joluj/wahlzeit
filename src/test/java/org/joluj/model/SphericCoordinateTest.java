@@ -87,4 +87,25 @@ public class SphericCoordinateTest {
     assertTrue(spherical.isEqual(cartesian));
     assertTrue(spherical.asCartesianCoordinate().isEqual(cartesian));
   }
+
+  @Test
+  public void testEqualsMethod() {
+    // Checks interchangeability of different coordinate types
+    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758);
+
+    //noinspection AssertBetweenInconvertibleTypes
+    assertEquals(spherical, cartesian);
+    //noinspection AssertBetweenInconvertibleTypes
+    assertEquals(cartesian, spherical);
+  }
+
+  @Test
+  public void testHashCodeMethod() {
+    // Checks interchangeability of different coordinate types
+    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758); // Same Point
+
+    assertEquals(spherical.hashCode(), cartesian.hashCode());
+  }
 }
