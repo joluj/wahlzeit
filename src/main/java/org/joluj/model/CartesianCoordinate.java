@@ -92,29 +92,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
     return this.getCartesianDistance(other) < epsilon;
   }
 
-  @Override
-  public boolean equals(Object other) {
-    if (other instanceof Coordinate) {
-      return this.isEqual((Coordinate) other);
-    }
-    return false;
-  }
-
-  @Override
-  public int hashCode() {
-    // Custom implementation since the hashCodes should be equal for objects that are
-    // equal according to #equals.
-    // This implementation does have a higher hash collision that traditional approaches
-    // that calculate with large primes. However, this implementation fits the purpose of this
-    // class and is faster than calculating with large primes.
-
-    int a = (int) Math.round(this.x);
-    int b = (int) Math.round(this.y);
-    int c = (int) Math.round(this.z);
-
-    return a + b + c;
-  }
-
   /**
    * Returns the Coordinate as String representation after the following scheme:
    * "cartesian|x|y|z" where x,y,z are the attributes from the object. "cartesian"

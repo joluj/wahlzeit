@@ -17,7 +17,7 @@ public abstract class AbstractCoordinate implements Coordinate {
   public double getCentralAngle(Coordinate other) {
     return this.asSphericCoordinate().getCentralAngle(other);
   }
-  
+
   @Override
   public SphericCoordinate asSphericCoordinate() {
     return this.asCartesianCoordinate().asSphericCoordinate();
@@ -40,13 +40,27 @@ public abstract class AbstractCoordinate implements Coordinate {
   }
 
   @Override
-  public int hashCode() {
-    return this.asCartesianCoordinate().hashCode();
+  public final int hashCode() {
+    var cartesian = this.asCartesianCoordinate();
+
+    // Custom implementation since the hashCodes should be equal for objects that are
+    // equal according to #equals.
+    // This implementation does have a higher hash collision that traditional approaches
+    // that calculate with large primes. However, this implementation fits the purpose of this
+    // class and is faster than calculating with large primes.
+
+    int a = (int) Math.round(cartesian.getX());
+    int b = (int) Math.round(cartesian.getY());
+    int c = (int) Math.round(cartesian.getZ());
+
+    return a + b + c;
   }
 
-  @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
   @Override
-  public boolean equals(Object obj) {
-    return this.asCartesianCoordinate().equals(obj);
+  public final boolean equals(Object other) {
+    if (other instanceof Coordinate) {
+      return this.asCartesianCoordinate().isEqual((Coordinate) other);
+    }
+    return false;
   }
 }
