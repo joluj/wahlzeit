@@ -17,6 +17,11 @@ public abstract class AbstractCoordinate implements Coordinate {
   public double getCentralAngle(Coordinate other) {
     return this.asSphericCoordinate().getCentralAngle(other);
   }
+  
+  @Override
+  public SphericCoordinate asSphericCoordinate() {
+    return this.asCartesianCoordinate().asSphericCoordinate();
+  }
 
   @Override
   public boolean isEqual(Coordinate other) {
