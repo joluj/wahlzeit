@@ -27,6 +27,16 @@ public class SphericCoordinateTest {
     SphericCoordinate.Deserialize("spherical|1|2.3");
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructor_WithNaN() {
+    new SphericCoordinate(Double.NaN, 1, 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testConstructor_WithInfinity() {
+    new SphericCoordinate(1, 1, Double.POSITIVE_INFINITY);
+  }
+
   @Test
   public void testSerialization() {
     var actual = SphericCoordinate.Deserialize("spherical|1|2.3|4.5");

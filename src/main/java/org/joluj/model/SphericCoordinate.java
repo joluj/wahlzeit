@@ -21,6 +21,9 @@ public class SphericCoordinate extends AbstractCoordinate {
     if (radius < 0) {
       throw new IllegalArgumentException("Radius must be >=0");
     }
+    if (!Double.isFinite(phi)) throw new IllegalArgumentException("Parameter phi must be finite");
+    if (!Double.isFinite(theta)) throw new IllegalArgumentException("Parameter theta must be finite");
+    if (!Double.isFinite(radius)) throw new IllegalArgumentException("Parameter radius must be finite");
 
     this.phi = phi % (2 * Math.PI);
     this.theta = theta % (Math.PI);
