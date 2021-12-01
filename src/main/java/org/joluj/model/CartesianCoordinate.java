@@ -1,5 +1,7 @@
 package org.joluj.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class CartesianCoordinate extends AbstractCoordinate {
 
   /**
@@ -83,7 +85,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
    * @throws NullPointerException if other is null
    */
   @Override
-  protected boolean doIsEqual(Coordinate other) {
+  protected boolean doIsEqual(@NotNull Coordinate other) {
     return this.doIsEqual(other.asCartesianCoordinate(), EPSILON);
   }
 
@@ -100,6 +102,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
    * "cartesian|x|y|z" where x,y,z are the attributes from the object. "cartesian"
    * is a const string for now.
    */
+  @NotNull
   public String serialize() {
     return "cartesian"
         + "|" + this.x
@@ -107,19 +110,21 @@ public class CartesianCoordinate extends AbstractCoordinate {
         + "|" + this.z;
   }
 
+  @NotNull
   @Override
   public CartesianCoordinate asCartesianCoordinate() {
     return this;
   }
 
   @Override
-  protected double doGetCartesianDistance(CartesianCoordinate other) {
+  protected double doGetCartesianDistance(@NotNull CartesianCoordinate other) {
     double x = this.x - other.x;
     double y = this.y - other.y;
     double z = this.z - other.z;
     return Math.sqrt(x * x + y * y + z * z);
   }
 
+  @NotNull
   @Override
   public SphericCoordinate asSphericCoordinate() {
     double radius = Math.sqrt(x * x + y * y + z * z);

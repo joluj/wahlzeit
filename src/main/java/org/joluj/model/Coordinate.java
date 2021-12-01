@@ -1,25 +1,30 @@
 package org.joluj.model;
 
+
+import org.jetbrains.annotations.NotNull;
+
 public interface Coordinate {
   /**
    * @return not null
    */
+  @NotNull
   public CartesianCoordinate asCartesianCoordinate();
 
   /**
    * @throws IllegalArgumentException if other is null
    */
-  public double getCartesianDistance(Coordinate other);
+  public double getCartesianDistance(@NotNull Coordinate other);
 
   /**
    * @return not null
    */
+  @NotNull
   public SphericCoordinate asSphericCoordinate();
 
   /**
    * @throws IllegalArgumentException if other is null
    */
-  public double getCentralAngle(Coordinate other);
+  public double getCentralAngle(@NotNull Coordinate other);
 
   public boolean isEqual(Coordinate other);
 
@@ -50,5 +55,6 @@ public interface Coordinate {
    *
    * @return not null
    */
+  @NotNull
   public String serialize();
 }

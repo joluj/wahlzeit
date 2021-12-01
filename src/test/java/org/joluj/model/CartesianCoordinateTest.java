@@ -103,6 +103,12 @@ public class CartesianCoordinateTest {
     assertEquals(a.getCartesianDistance(d), 1, DELTA);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void getDistanceNull() {
+    var a = new CartesianCoordinate(0, 0, 0);
+    a.getCartesianDistance(null);
+  }
+
   @Test
   public void testAsSpheric() {
     var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758);

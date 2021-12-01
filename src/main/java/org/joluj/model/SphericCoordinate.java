@@ -1,5 +1,7 @@
 package org.joluj.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SphericCoordinate extends AbstractCoordinate {
 
   /**
@@ -27,6 +29,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     this.assertClassInvariants();
   }
 
+  @NotNull
   @Override
   public CartesianCoordinate asCartesianCoordinate() {
     double x = radius * Math.sin(theta) * Math.cos(phi);
@@ -36,13 +39,14 @@ public class SphericCoordinate extends AbstractCoordinate {
     return new CartesianCoordinate(x, y, z);
   }
 
+  @NotNull
   @Override
   public SphericCoordinate asSphericCoordinate() {
     return this;
   }
 
   @Override
-  protected double doGetCentralAngle(SphericCoordinate other) {
+  protected double doGetCentralAngle(@NotNull SphericCoordinate other) {
     if (isEqual(other)) return 0;
 
     double dPhi = this.phi - other.phi;
@@ -79,6 +83,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
   }
 
+  @NotNull
   @Override
   public String serialize() {
     return "spherical"

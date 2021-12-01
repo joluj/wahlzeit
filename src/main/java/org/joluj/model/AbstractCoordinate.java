@@ -1,5 +1,7 @@
 package org.joluj.model;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Provides default delegations of several methods by converting the object to a
  * {@link CartesianCoordinate} first.
@@ -9,7 +11,7 @@ package org.joluj.model;
 public abstract class AbstractCoordinate implements Coordinate {
 
   @Override
-  public double getCartesianDistance(Coordinate other) {
+  public double getCartesianDistance(@NotNull Coordinate other) {
     // Precondition
     if (other == null) throw new IllegalArgumentException("Argument is null");
     // Invariant
@@ -29,12 +31,12 @@ public abstract class AbstractCoordinate implements Coordinate {
   /**
    * @param other not null
    */
-  protected double doGetCartesianDistance(CartesianCoordinate other) {
+  protected double doGetCartesianDistance(@NotNull CartesianCoordinate other) {
     return this.asCartesianCoordinate().getCartesianDistance(other);
   }
 
   @Override
-  public double getCentralAngle(Coordinate other) {
+  public double getCentralAngle(@NotNull Coordinate other) {
     if (other == null) throw new IllegalArgumentException("Argument is null");
     this.assertClassInvariants();
 
@@ -49,10 +51,11 @@ public abstract class AbstractCoordinate implements Coordinate {
   /**
    * @param other not null
    */
-  protected double doGetCentralAngle(SphericCoordinate other) {
+  protected double doGetCentralAngle(@NotNull SphericCoordinate other) {
     return this.asSphericCoordinate().doGetCentralAngle(other);
   }
 
+  @NotNull
   @Override
   public SphericCoordinate asSphericCoordinate() {
     return this.asCartesianCoordinate().asSphericCoordinate();
@@ -60,15 +63,14 @@ public abstract class AbstractCoordinate implements Coordinate {
 
   @Override
   public boolean isEqual(Coordinate other) {
-    if (other == null) throw new IllegalArgumentException("Argument is null");
-    this.assertClassInvariants();
+    if (other == null) return false;
     return this.doIsEqual(other);
   }
 
   /**
    * @param other not null
    */
-  protected boolean doIsEqual(Coordinate other) {
+  protected boolean doIsEqual(@NotNull Coordinate other) {
     return this.asCartesianCoordinate().isEqual(other);
   }
 
@@ -78,6 +80,7 @@ public abstract class AbstractCoordinate implements Coordinate {
    * <p>
    * If overwritten, remember to register the deserialization in {@link Coordinate#Deserialize}.
    */
+  @NotNull
   @Override
   public String serialize() {
     return this.asCartesianCoordinate().serialize();
