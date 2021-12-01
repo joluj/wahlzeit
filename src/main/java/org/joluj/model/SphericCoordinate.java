@@ -24,6 +24,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     this.theta = theta % (Math.PI);
     this.radius = radius;
 
+    this.assertClassInvariants();
   }
 
   @Override
@@ -41,13 +42,12 @@ public class SphericCoordinate extends AbstractCoordinate {
   }
 
   @Override
-  public double getCentralAngle(Coordinate other) {
+  protected double doGetCentralAngle(SphericCoordinate other) {
     if (isEqual(other)) return 0;
 
-    var otherSpheric = other.asSphericCoordinate();
-    double dPhi = this.phi - otherSpheric.phi;
+    double dPhi = this.phi - other.phi;
     double thetaA = Math.PI / 2 - theta;
-    double thetaB = Math.PI / 2 - otherSpheric.theta;
+    double thetaB = Math.PI / 2 - other.theta;
 
     return Math.acos(
         Math.sin(thetaA) * Math.sin(thetaB)
@@ -97,5 +97,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 
   public double getRadius() {
     return radius;
+  }
+
+  @Override
+  protected void assertClassInvariants() {
+    assert 0 <= this.phi && this.phi <= 2 * Math.PI;
+    assert 0 <= this.theta && this.theta <= Math.PI;
+    assert 0 <= this.radius;
+    // In a real world app this would also check if the coordinate is on earth
   }
 }

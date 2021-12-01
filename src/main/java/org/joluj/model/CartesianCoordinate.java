@@ -28,6 +28,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
     this.x = x;
     this.y = y;
     this.z = z;
+
+    this.assertClassInvariants();
   }
 
   /**
@@ -80,15 +82,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
    *
    * @throws NullPointerException if other is null
    */
-  public boolean isEqual(Coordinate other) {
-    return this.isEqual(other.asCartesianCoordinate(), EPSILON);
+  @Override
+  protected boolean doIsEqual(Coordinate other) {
+    return this.doIsEqual(other.asCartesianCoordinate(), EPSILON);
   }
 
   /**
    * returns true, if the distance to the other coordinate is
    * smaller than epsilon.
    */
-  public boolean isEqual(Coordinate other, double epsilon) {
+  protected boolean doIsEqual(Coordinate other, double epsilon) {
     return this.getCartesianDistance(other) < epsilon;
   }
 
@@ -110,11 +113,10 @@ public class CartesianCoordinate extends AbstractCoordinate {
   }
 
   @Override
-  public double getCartesianDistance(Coordinate other) {
-    var otherCartesian = other.asCartesianCoordinate();
-    double x = this.x - otherCartesian.x;
-    double y = this.y - otherCartesian.y;
-    double z = this.z - otherCartesian.z;
+  protected double doGetCartesianDistance(CartesianCoordinate other) {
+    double x = this.x - other.x;
+    double y = this.y - other.y;
+    double z = this.z - other.z;
     return Math.sqrt(x * x + y * y + z * z);
   }
 
@@ -125,5 +127,14 @@ public class CartesianCoordinate extends AbstractCoordinate {
     double theta = Math.acos(z / radius);
 
     return new SphericCoordinate(phi, theta, radius);
+  }
+
+  @Override
+  protected void assertClassInvariants() {
+    assert Double.isFinite(this.x);
+    assert Double.isFinite(this.y);
+    assert Double.isFinite(this.z);
+    // In a real world app this would check if the coordinate is on earth,
+    // but it would be too much here
   }
 }

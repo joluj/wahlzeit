@@ -10,12 +10,47 @@ public abstract class AbstractCoordinate implements Coordinate {
 
   @Override
   public double getCartesianDistance(Coordinate other) {
+    // Precondition
+    if (other == null) throw new IllegalArgumentException("Argument is null");
+    // Invariant
+    this.assertClassInvariants();
+
+    // Action
+    var distance = this.doGetCartesianDistance(other.asCartesianCoordinate());
+
+    // Postcondition
+    assert distance >= 0;
+    // Invariant
+    this.assertClassInvariants();
+
+    return distance;
+  }
+
+  /**
+   * @param other not null
+   */
+  protected double doGetCartesianDistance(CartesianCoordinate other) {
     return this.asCartesianCoordinate().getCartesianDistance(other);
   }
 
   @Override
   public double getCentralAngle(Coordinate other) {
-    return this.asSphericCoordinate().getCentralAngle(other);
+    if (other == null) throw new IllegalArgumentException("Argument is null");
+    this.assertClassInvariants();
+
+    var angle = this.doGetCentralAngle(other.asSphericCoordinate());
+
+    assert angle >= 0;
+    this.assertClassInvariants();
+
+    return angle;
+  }
+
+  /**
+   * @param other not null
+   */
+  protected double doGetCentralAngle(SphericCoordinate other) {
+    return this.asSphericCoordinate().doGetCentralAngle(other);
   }
 
   @Override
@@ -25,6 +60,15 @@ public abstract class AbstractCoordinate implements Coordinate {
 
   @Override
   public boolean isEqual(Coordinate other) {
+    if (other == null) throw new IllegalArgumentException("Argument is null");
+    this.assertClassInvariants();
+    return this.doIsEqual(other);
+  }
+
+  /**
+   * @param other not null
+   */
+  protected boolean doIsEqual(Coordinate other) {
     return this.asCartesianCoordinate().isEqual(other);
   }
 
@@ -63,4 +107,9 @@ public abstract class AbstractCoordinate implements Coordinate {
     }
     return false;
   }
+
+  /**
+   * Throws error if the class invariants are not fulfilled
+   */
+  protected abstract void assertClassInvariants();
 }
