@@ -9,6 +9,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.joluj.model.HolidayPhotoManager;
 import org.wahlzeit.main.*;
 import org.wahlzeit.services.*;
@@ -21,6 +22,7 @@ public class PhotoManager extends ObjectManager {
   /**
    *
    */
+  @NotNull
   protected static final PhotoManager instance = new HolidayPhotoManager();
 
   /**

@@ -7,6 +7,7 @@ package org.wahlzeit.model;
 
 import java.sql.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.joluj.model.HolidayPhotoFactory;
 import org.wahlzeit.services.*;
 
@@ -23,6 +24,7 @@ public class PhotoFactory {
   /**
    * Public singleton access method.
    */
+  @NotNull
   public static synchronized PhotoFactory getInstance() {
     if (instance == null) {
       SysLog.logSysInfo("setting app-specific HolidayPhotoFactory");
@@ -34,6 +36,9 @@ public class PhotoFactory {
 
   /**
    * Method to set the singleton instance of PhotoFactory.
+   *
+   * @throws IllegalStateException    if it was initialized before
+   * @throws IllegalArgumentException if the parameter is not an instance of {@link HolidayPhotoFactory}
    */
   protected static synchronized void setInstance(PhotoFactory photoFactory) {
     if (instance != null) {

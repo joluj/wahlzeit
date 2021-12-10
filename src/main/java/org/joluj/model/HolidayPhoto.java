@@ -1,5 +1,7 @@
 package org.joluj.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.services.SysLog;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 
 public class HolidayPhoto extends Photo {
 
+  @Nullable
   private String country;
 
   /**
@@ -32,17 +35,18 @@ public class HolidayPhoto extends Photo {
     super(rset);
   }
 
+  @Nullable
   public String getCountry() {
     return country;
   }
 
-  protected void setCountry(String country) {
+  protected void setCountry(@Nullable String country) {
     this.country = country;
     incWriteCount();
   }
 
   @Override
-  public void readFrom(ResultSet rset) throws SQLException {
+  public void readFrom(@NotNull ResultSet rset) throws SQLException {
     SysLog.logSysInfo("HolidayPhoto#readFrom");
 
     super.readFrom(rset);
@@ -52,7 +56,7 @@ public class HolidayPhoto extends Photo {
   }
 
   @Override
-  public void writeOn(ResultSet rset) throws SQLException {
+  public void writeOn(@NotNull ResultSet rset) throws SQLException {
     SysLog.logSysInfo("HolidayPhoto#writeOn");
     super.writeOn(rset);
 

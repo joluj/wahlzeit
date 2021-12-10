@@ -8,6 +8,8 @@ package org.wahlzeit.model;
 import java.sql.*;
 import java.net.*;
 
+import org.jetbrains.annotations.NotNull;
+import org.joluj.model.ExceptionHelper;
 import org.joluj.model.Location;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
@@ -104,18 +106,22 @@ public class Photo extends DataObject {
   }
 
   /**
+   * @throws IllegalArgumentException iff parameter is null
    * @methodtype constructor
    */
-  public Photo(PhotoId myId) {
+  public Photo(@NotNull PhotoId myId) {
+    ExceptionHelper.AssertNotNull(myId);
     id = myId;
 
     incWriteCount();
   }
 
   /**
+   * @throws IllegalArgumentException iff parameter is null
    * @methodtype constructor
    */
-  public Photo(ResultSet rset) throws SQLException {
+  public Photo(@NotNull ResultSet rset) throws SQLException {
+    ExceptionHelper.AssertNotNull(rset);
     readFrom(rset);
   }
 
@@ -127,9 +133,10 @@ public class Photo extends DataObject {
   }
 
   /**
-   *
+   * @throws IllegalArgumentException iff parameter is null
    */
-  public void readFrom(ResultSet rset) throws SQLException {
+  public void readFrom(@NotNull ResultSet rset) throws SQLException {
+    ExceptionHelper.AssertNotNull(rset);
     id = PhotoId.getIdFromInt(rset.getInt("id"));
 
     ownerId = rset.getInt("owner_id");
@@ -161,9 +168,10 @@ public class Photo extends DataObject {
   }
 
   /**
-   *
+   * @throws IllegalArgumentException iff parameter is null
    */
-  public void writeOn(ResultSet rset) throws SQLException {
+  public void writeOn(@NotNull ResultSet rset) throws SQLException {
+    ExceptionHelper.AssertNotNull(rset);
     rset.updateInt("id", id.asInt());
     rset.updateInt("owner_id", ownerId);
     rset.updateString("owner_name", ownerName);

@@ -1,5 +1,6 @@
 package org.joluj.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.wahlzeit.model.PhotoManager;
 import org.wahlzeit.services.SysLog;
 
@@ -18,7 +19,8 @@ public class HolidayPhotoManager extends PhotoManager {
   }
 
   @Override
-  protected HolidayPhoto createObject(ResultSet rset) throws SQLException {
+  protected HolidayPhoto createObject(@NotNull ResultSet rset) throws SQLException {
+    ExceptionHelper.AssertNotNull(rset);
     return HolidayPhotoFactory.getInstance().createPhoto(rset);
   }
 }

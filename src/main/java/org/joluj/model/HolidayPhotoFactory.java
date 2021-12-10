@@ -1,5 +1,6 @@
 package org.joluj.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.wahlzeit.model.PhotoFactory;
 import org.wahlzeit.model.PhotoId;
 
@@ -14,10 +15,13 @@ public class HolidayPhotoFactory extends PhotoFactory {
   /**
    * Public singleton access method.
    */
+  @NotNull
   public static synchronized HolidayPhotoFactory getInstance() {
     PhotoFactory instance = PhotoFactory.getInstance();
 
     if (!(instance instanceof HolidayPhotoFactory)) {
+      // Since I have modified the PhotoFactory, this case cannot
+      // happen. Thus, it's not added to the contract.
       throw new IllegalStateException("PhotoFactory is no instance of HolidayPhotoFactory");
     }
 
@@ -28,23 +32,30 @@ public class HolidayPhotoFactory extends PhotoFactory {
    * @methodtype factory
    */
   @Override
+  @NotNull
   public HolidayPhoto createPhoto() {
     return new HolidayPhoto();
   }
 
   /**
+   * @throws IllegalArgumentException iff parameter is null
    * @methodtype factory
    */
   @Override
-  public HolidayPhoto createPhoto(PhotoId id) {
+  @NotNull
+  public HolidayPhoto createPhoto(@NotNull PhotoId id) {
+    ExceptionHelper.AssertNotNull(id);
     return new HolidayPhoto(id);
   }
 
   /**
+   * @throws IllegalArgumentException iff parameter is null
    * @methodtype factory
    */
   @Override
-  public HolidayPhoto createPhoto(ResultSet rs) throws SQLException {
+  @NotNull
+  public HolidayPhoto createPhoto(@NotNull ResultSet rs) throws SQLException {
+    ExceptionHelper.AssertNotNull(rs);
     return new HolidayPhoto(rs);
   }
 }

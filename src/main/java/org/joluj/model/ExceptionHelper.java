@@ -7,7 +7,7 @@ public class ExceptionHelper {
    *
    * @throws IllegalArgumentException iff obj is null
    */
-  static void AssertNotNull(Object obj) {
+  public static void AssertNotNull(Object obj) {
     if (obj == null) throw new IllegalArgumentException("Argument is null");
   }
 }
