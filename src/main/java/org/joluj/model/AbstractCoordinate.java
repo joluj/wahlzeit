@@ -13,7 +13,7 @@ public abstract class AbstractCoordinate implements Coordinate {
   @Override
   public double getCartesianDistance(@NotNull Coordinate other) {
     // Precondition
-    if (other == null) throw new IllegalArgumentException("Argument is null");
+    ExceptionHelper.AssertNotNull(other);
     // Invariant
     this.assertClassInvariants();
 
@@ -37,7 +37,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 
   @Override
   public double getCentralAngle(@NotNull Coordinate other) {
-    if (other == null) throw new IllegalArgumentException("Argument is null");
+    ExceptionHelper.AssertNotNull(other);
     this.assertClassInvariants();
 
     var angle = this.doGetCentralAngle(other.asSphericCoordinate());
