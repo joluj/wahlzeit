@@ -1,5 +1,6 @@
 package org.joluj.model;
 
+import org.joluj.model.exceptions.SqlParseException;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.wahlzeit.model.PhotoStatus;
