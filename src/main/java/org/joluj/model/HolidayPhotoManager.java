@@ -20,7 +20,7 @@ public class HolidayPhotoManager extends PhotoManager {
 
   @Override
   protected HolidayPhoto createObject(@NotNull ResultSet rset) throws SQLException {
-    ExceptionHelper.AssertNotNull(rset);
+    AssertionHelper.AssertNotNull(rset);
     return HolidayPhotoFactory.getInstance().createPhoto(rset);
   }
 }

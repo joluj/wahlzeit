@@ -9,7 +9,7 @@ import java.sql.*;
 import java.net.*;
 
 import org.jetbrains.annotations.NotNull;
-import org.joluj.model.ExceptionHelper;
+import org.joluj.model.AssertionHelper;
 import org.joluj.model.Location;
 import org.joluj.model.exceptions.SqlParseException;
 import org.wahlzeit.services.*;
@@ -111,7 +111,7 @@ public class Photo extends DataObject {
    * @methodtype constructor
    */
   public Photo(@NotNull PhotoId myId) {
-    ExceptionHelper.AssertNotNull(myId);
+    AssertionHelper.AssertNotNull(myId);
     id = myId;
 
     incWriteCount();
@@ -122,7 +122,7 @@ public class Photo extends DataObject {
    * @methodtype constructor
    */
   public Photo(@NotNull ResultSet rset) throws SQLException {
-    ExceptionHelper.AssertNotNull(rset);
+    AssertionHelper.AssertNotNull(rset);
     readFrom(rset);
   }
 
@@ -137,7 +137,7 @@ public class Photo extends DataObject {
    * @throws IllegalArgumentException iff parameter is null
    */
   public void readFrom(@NotNull ResultSet rset) throws SQLException {
-    ExceptionHelper.AssertNotNull(rset);
+    AssertionHelper.AssertNotNull(rset);
     id = PhotoId.getIdFromInt(rset.getInt("id"));
 
     ownerId = rset.getInt("owner_id");
@@ -176,7 +176,7 @@ public class Photo extends DataObject {
    * @throws IllegalArgumentException iff parameter is null
    */
   public void writeOn(@NotNull ResultSet rset) throws SQLException {
-    ExceptionHelper.AssertNotNull(rset);
+    AssertionHelper.AssertNotNull(rset);
     rset.updateInt("id", id.asInt());
     rset.updateInt("owner_id", ownerId);
     rset.updateString("owner_name", ownerName);

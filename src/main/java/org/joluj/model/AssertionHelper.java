@@ -1,6 +1,6 @@
 package org.joluj.model;
 
-public class ExceptionHelper {
+public class AssertionHelper {
 
   /**
    * Asserts that obj is not null

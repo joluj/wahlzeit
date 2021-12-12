@@ -44,7 +44,7 @@ public class HolidayPhotoFactory extends PhotoFactory {
   @Override
   @NotNull
   public HolidayPhoto createPhoto(@NotNull PhotoId id) {
-    ExceptionHelper.AssertNotNull(id);
+    AssertionHelper.AssertNotNull(id);
     return new HolidayPhoto(id);
   }
 
@@ -55,7 +55,7 @@ public class HolidayPhotoFactory extends PhotoFactory {
   @Override
   @NotNull
   public HolidayPhoto createPhoto(@NotNull ResultSet rs) throws SQLException {
-    ExceptionHelper.AssertNotNull(rs);
+    AssertionHelper.AssertNotNull(rs);
     return new HolidayPhoto(rs);
   }
 }
