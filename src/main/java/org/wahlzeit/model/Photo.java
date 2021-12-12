@@ -135,6 +135,7 @@ public class Photo extends DataObject {
 
   /**
    * @throws IllegalArgumentException iff parameter is null
+   * @throws SqlParseException        iff the result set cannot be parsed properly
    */
   public void readFrom(@NotNull ResultSet rset) throws SQLException {
     AssertionHelper.AssertNotNull(rset);
