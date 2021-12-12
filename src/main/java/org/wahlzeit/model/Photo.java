@@ -11,6 +11,7 @@ import java.net.*;
 import org.jetbrains.annotations.NotNull;
 import org.joluj.model.ExceptionHelper;
 import org.joluj.model.Location;
+import org.joluj.model.exceptions.SqlParseException;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
 
@@ -163,7 +164,11 @@ public class Photo extends DataObject {
     String locationFromDb = rset.getString("location");
     // Only create a location object if the location was set
     if (locationFromDb != null && !locationFromDb.isEmpty()) {
-      this.location = Location.Deserialize(locationFromDb);
+      try {
+        this.location = Location.Deserialize(locationFromDb);
+      } catch (IllegalArgumentException e) {
+        throw new SqlParseException("Error while parsing Photo: " + e.getMessage(), e);
+      }
     }
   }
 
