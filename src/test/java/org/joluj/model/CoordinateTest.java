@@ -18,6 +18,7 @@ public class CoordinateTest {
   public static void WaitForEmptyCoordinateCache() {
     System.gc();
     await().atMost(10, TimeUnit.SECONDS).until(CartesianCoordinate.instances::isEmpty);
+    await().atMost(10, TimeUnit.SECONDS).until(SphericCoordinate.instances::isEmpty);
   }
 
   /**
