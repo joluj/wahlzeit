@@ -126,7 +126,7 @@ public class CartesianCoordinateTest {
   @Test
   public void testAsSpheric() {
     var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758);
-    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+    var spherical = SphericCoordinate.FromPhiThetaRadius(0.5, 1.3, 1);
 
     assertTrue(cartesian.asSphericCoordinate().isEqual(spherical));
     assertTrue(cartesian.isEqual(spherical));

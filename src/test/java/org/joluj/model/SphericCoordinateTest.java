@@ -1,5 +1,6 @@
 package org.joluj.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,9 +9,17 @@ public class SphericCoordinateTest {
 
   static double EPSILON = 0.0001;
 
+  /**
+   * Clears the cache before each test run
+   */
+  @Before
+  public void clearCache() {
+    CoordinateTest.WaitForEmptyCoordinateCache();
+  }
+
   @Test
   public void testCreationFromString() {
-    var expected = new SphericCoordinate(1, 2.3, 4.5);
+    var expected = SphericCoordinate.FromPhiThetaRadius(1, 2.3, 4.5);
     var actual = SphericCoordinate.Deserialize("spherical|1|2.3|4.5");
     assertEquals(expected.getPhi(), actual.getPhi(), EPSILON);
     assertEquals(expected.getTheta(), actual.getTheta(), EPSILON);
@@ -29,12 +38,12 @@ public class SphericCoordinateTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructor_WithNaN() {
-    new SphericCoordinate(Double.NaN, 1, 1);
+    SphericCoordinate.FromPhiThetaRadius(Double.NaN, 1, 1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructor_WithInfinity() {
-    new SphericCoordinate(1, 1, Double.POSITIVE_INFINITY);
+    SphericCoordinate.FromPhiThetaRadius(1, 1, Double.POSITIVE_INFINITY);
   }
 
   @Test
@@ -45,8 +54,8 @@ public class SphericCoordinateTest {
 
   @Test
   public void testIsEqualSameObject() {
-    var a = new SphericCoordinate(1, 2, 3);
-    var b = new SphericCoordinate(1, 2, 3);
+    var a = SphericCoordinate.FromPhiThetaRadius(1, 2, 3);
+    var b = SphericCoordinate.FromPhiThetaRadius(1, 2, 3);
     assertTrue(a.isEqual(b));
     assertTrue(b.isEqual(a));
 
@@ -55,43 +64,43 @@ public class SphericCoordinateTest {
 
   @Test
   public void testIsEqualAngleModulo() {
-    var a = new SphericCoordinate(1.2, 1 + Math.PI, 1);
-    var b = new SphericCoordinate(1.2 + 2 * Math.PI, 1, 1);
+    var a = SphericCoordinate.FromPhiThetaRadius(1.2, 1 + Math.PI, 1);
+    var b = SphericCoordinate.FromPhiThetaRadius(1.2 + 2 * Math.PI, 1, 1);
     assertTrue(a.isEqual(b));
   }
 
   @Test
   public void testIsNotEqual() {
-    var a = new SphericCoordinate(1, 2, 3);
-    var b = new SphericCoordinate(1, 2, 4);
+    var a = SphericCoordinate.FromPhiThetaRadius(1, 2, 3);
+    var b = SphericCoordinate.FromPhiThetaRadius(1, 2, 4);
     assertFalse(a.isEqual(b));
     assertFalse(b.isEqual(a));
   }
 
   @Test
   public void testCentralAngleSameCoords() {
-    var a = new SphericCoordinate(1, 2, 3);
-    var b = new SphericCoordinate(1, 2, 3);
+    var a = SphericCoordinate.FromPhiThetaRadius(1, 2, 3);
+    var b = SphericCoordinate.FromPhiThetaRadius(1, 2, 3);
     assertEquals(0, a.getCentralAngle(b), EPSILON);
   }
 
   @Test
   public void testCentralAngleOtherCoords1() {
-    var a = new SphericCoordinate(1, 2, 5);
-    var b = new SphericCoordinate(1, 3, 5);
+    var a = SphericCoordinate.FromPhiThetaRadius(1, 2, 5);
+    var b = SphericCoordinate.FromPhiThetaRadius(1, 3, 5);
     assertEquals(1, b.getCentralAngle(a), EPSILON);
   }
 
   @Test
   public void testCentralAngleOtherCoords2() {
-    var a = new SphericCoordinate(1.234, 2.345, 5);
-    var b = new SphericCoordinate(0.543, 0.543, 5);
+    var a = SphericCoordinate.FromPhiThetaRadius(1.234, 2.345, 5);
+    var b = SphericCoordinate.FromPhiThetaRadius(0.543, 0.543, 5);
     assertEquals(1.890, b.getCentralAngle(a), EPSILON);
   }
 
   @Test
   public void testAsCartesian() {
-    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+    var spherical = SphericCoordinate.FromPhiThetaRadius(0.5, 1.3, 1);
     var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758);
 
     assertTrue(spherical.isEqual(cartesian));
@@ -101,7 +110,7 @@ public class SphericCoordinateTest {
   @Test
   public void testEqualsMethod() {
     // Checks interchangeability of different coordinate types
-    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+    var spherical = SphericCoordinate.FromPhiThetaRadius(0.5, 1.3, 1);
     var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758);
 
     //noinspection AssertBetweenInconvertibleTypes
@@ -113,7 +122,7 @@ public class SphericCoordinateTest {
   @Test
   public void testHashCodeMethod() {
     // Checks interchangeability of different coordinate types
-    var spherical = new SphericCoordinate(0.5, 1.3, 1);
+    var spherical = SphericCoordinate.FromPhiThetaRadius(0.5, 1.3, 1);
     var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758); // Same Point
 
     assertEquals(spherical.hashCode(), cartesian.hashCode());

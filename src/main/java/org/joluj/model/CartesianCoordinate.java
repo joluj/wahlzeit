@@ -158,7 +158,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     double phi = Math.atan(y / x);
     double theta = Math.acos(z / radius);
 
-    return new SphericCoordinate(phi, theta, radius);
+    return SphericCoordinate.FromPhiThetaRadius(phi, theta, radius);
   }
 
   @Override

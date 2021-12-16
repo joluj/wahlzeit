@@ -2,7 +2,15 @@ package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
+
 public class SphericCoordinate extends AbstractCoordinate {
+  /**
+   * Contains all instances of the {@link SphericCoordinate}.
+   * Made protected only for testing.
+   */
+  protected static final WeakHashMap<SphericCoordinate, WeakReference<SphericCoordinate>> instances = new WeakHashMap<>();
 
   /**
    * 0 <= phi <= 2*PI
@@ -17,7 +25,7 @@ public class SphericCoordinate extends AbstractCoordinate {
    */
   private final double radius;
 
-  public SphericCoordinate(double phi, double theta, double radius) {
+  private SphericCoordinate(double phi, double theta, double radius) {
     if (radius < 0) {
       throw new IllegalArgumentException("Radius must be >=0");
     }
@@ -31,6 +39,25 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     this.assertClassInvariants();
   }
+
+  public static SphericCoordinate FromPhiThetaRadius(double phi, double theta, double radius) {
+    // create a new coordinate object
+    var coordinate = new SphericCoordinate(phi, theta, radius);
+
+    // this will return the currently cached coordinate, or the new value if it does not already exist.
+    var weakRef = instances.get(coordinate);
+    if (weakRef == null) {
+      weakRef = new WeakReference<>(coordinate);
+      instances.put(coordinate, weakRef);
+    }
+
+    // post-condition
+    var returnValue = weakRef.get();
+    assert returnValue != null;
+
+    return returnValue;
+  }
+
 
   @NotNull
   @Override
@@ -65,7 +92,7 @@ public class SphericCoordinate extends AbstractCoordinate {
   public static SphericCoordinate Deserialize(String str) {
     if (str == null || str.isEmpty()) {
       // Coordinate is empty / not initialized
-      return new SphericCoordinate(0, 0, 0);
+      return SphericCoordinate.FromPhiThetaRadius(0, 0, 0);
     }
 
     String[] parts = str.split("\\|");
@@ -79,7 +106,7 @@ public class SphericCoordinate extends AbstractCoordinate {
       double theta = Double.parseDouble(parts[2]);
       double radius = Double.parseDouble(parts[3]);
 
-      return new SphericCoordinate(phi, theta, radius);
+      return SphericCoordinate.FromPhiThetaRadius(phi, theta, radius);
     } catch (NullPointerException | NumberFormatException e) {
       // Catch Exceptions and rethrow as IllegalArgumentException to match JavaDoc.
       throw new IllegalArgumentException("Incorrect String representation.", e);
