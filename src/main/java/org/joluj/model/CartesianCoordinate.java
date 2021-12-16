@@ -12,15 +12,15 @@ public class CartesianCoordinate extends AbstractCoordinate {
   /**
    * x-coordinate in meters
    */
-  private double x;
+  private final double x;
   /**
    * y-coordinate in meters
    */
-  private double y;
+  private final double y;
   /**
    * z-coordinate in meters
    */
-  private double z;
+  private final double z;
 
   /**
    * Creates a Coordinate following the cartesian scheme (with center of earth = [0,0,0]).
