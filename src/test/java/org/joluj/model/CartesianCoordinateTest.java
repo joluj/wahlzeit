@@ -130,37 +130,4 @@ public class CartesianCoordinateTest {
     assertTrue(cartesian.asSphericCoordinate().isEqual(spherical));
     assertTrue(cartesian.isEqual(spherical));
   }
-
-  /**
-   * Asserts that multiple "new" coordinates are actually the same object,
-   * not just equal.
-   */
-  @Test
-  public void testSameObject() {
-    var a = CartesianCoordinate.FromXYZ(1, 1, 1);
-    var b = CartesianCoordinate.FromXYZ(1, 1, 1);
-
-    assertSame(a, b);
-  }
-
-  /**
-   * Asserts that the garbage collector does not throw away still used things
-   */
-  @Test
-  public void testSameObject_AfterGarbageCollector() {
-    var a = CartesianCoordinate.FromXYZ(1, 1, 1);
-    var b = CartesianCoordinate.FromXYZ(10, 10, 10);
-    assertNotEquals(a, b); // Just to make sure that these are different objects
-    assertEquals(CartesianCoordinate.instances.size(), 2);
-
-    // remove ref to b
-    b = null;
-
-    // Clear garbage
-    System.gc();
-    // Assert that there is exactly one instance left
-    await().atMost(10, TimeUnit.SECONDS).until(() -> CartesianCoordinate.instances.size() == 1);
-    // Assert that this instance is a
-    assertSame(a, ((WeakReference<CartesianCoordinate>) CartesianCoordinate.instances.values().toArray()[0]).get());
-  }
 }

@@ -1,16 +1,13 @@
 package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.ref.WeakReference;
-import java.util.WeakHashMap;
+import org.joluj.utils.CoordinateCache;
 
 public class SphericCoordinate extends AbstractCoordinate {
   /**
    * Contains all instances of the {@link SphericCoordinate}.
-   * Made protected only for testing.
    */
-  protected static final WeakHashMap<SphericCoordinate, WeakReference<SphericCoordinate>> instances = new WeakHashMap<>();
+  protected static final CoordinateCache<SphericCoordinate> instances = new CoordinateCache<>();
 
   /**
    * 0 <= phi <= 2*PI
@@ -40,22 +37,16 @@ public class SphericCoordinate extends AbstractCoordinate {
     this.assertClassInvariants();
   }
 
+  /**
+   * Creates a coordinate given the spherical coordinates phi, theta, and radius.
+   * <p>
+   * If there exists a cached version of a coordinate at (about) that point, then the existing object
+   * is returned.
+   * <p>
+   * Uses #equals and #hashCode to compare the equality of the objects.
+   */
   public static SphericCoordinate FromPhiThetaRadius(double phi, double theta, double radius) {
-    // create a new coordinate object
-    var coordinate = new SphericCoordinate(phi, theta, radius);
-
-    // this will return the currently cached coordinate, or the new value if it does not already exist.
-    var weakRef = instances.get(coordinate);
-    if (weakRef == null) {
-      weakRef = new WeakReference<>(coordinate);
-      instances.put(coordinate, weakRef);
-    }
-
-    // post-condition
-    var returnValue = weakRef.get();
-    assert returnValue != null;
-
-    return returnValue;
+    return SphericCoordinate.instances.getOrSet(new SphericCoordinate(phi, theta, radius));
   }
 
 

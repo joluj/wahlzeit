@@ -1,16 +1,13 @@
 package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.ref.WeakReference;
-import java.util.WeakHashMap;
+import org.joluj.utils.CoordinateCache;
 
 public class CartesianCoordinate extends AbstractCoordinate {
   /**
    * Contains all instances of the {@link CartesianCoordinate}.
-   * Made protected only for testing.
    */
-  protected static final WeakHashMap<CartesianCoordinate, WeakReference<CartesianCoordinate>> instances = new WeakHashMap<>();
+  protected static final CoordinateCache<CartesianCoordinate> instances = new CoordinateCache<>();
 
   /**
    * Default allowed distance (in meters).
@@ -42,23 +39,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
     this.assertClassInvariants();
   }
 
+  /**
+   * Creates a coordinate given the cartesian coordinates x, y, and z.
+   * <p>
+   * If there exists a cached version of a coordinate at (about) that point, then the existing object
+   * is returned.
+   * <p>
+   * Uses #equals and #hashCode to compare the equality of the objects.
+   */
   public static CartesianCoordinate FromXYZ(double x, double y, double z) {
-    // create a new coordinate object
-    var coordinate = new CartesianCoordinate(x, y, z);
-
-    // this will return the currently cached coordinate, or the new value if it does not already exist.
-    var weakRef = instances.get(coordinate);
-    if (weakRef == null) {
-      weakRef = new WeakReference<>(coordinate);
-      instances.put(coordinate, weakRef);
-    }
-
-    // post-condition
-    var returnValue = weakRef.get();
-    assert returnValue != null;
-
-    return returnValue;
-
+    return CartesianCoordinate.instances.getOrSet(new CartesianCoordinate(x, y, z));
   }
 
   /**
