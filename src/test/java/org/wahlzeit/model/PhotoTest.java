@@ -1,7 +1,6 @@
 package org.wahlzeit.model;
 
 import org.joluj.model.CartesianCoordinate;
-import org.joluj.model.HolidayPhoto;
 import org.joluj.model.Location;
 import org.joluj.model.exceptions.SqlParseException;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import static org.junit.Assert.*;
 public class PhotoTest {
   @Test
   public void location() {
-    var location = new Location(new CartesianCoordinate(1, 2.3, 4.5));
+    var location = new Location(CartesianCoordinate.FromXYZ(1, 2.3, 4.5));
     var photo = new Photo();
 
     assertNull(photo.getLocation());

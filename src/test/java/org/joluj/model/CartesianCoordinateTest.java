@@ -1,16 +1,30 @@
 package org.joluj.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
 public class CartesianCoordinateTest {
 
   static double DELTA = 0.000001;
 
+  /**
+   * Clears the cache before each test run
+   */
+  @Before
+  public void clearCache() {
+    CoordinateTest.WaitForEmptyCoordinateCache();
+  }
+
   @Test
   public void creationFromString() {
-    var expected = new CartesianCoordinate(1, 2.3, 4.5);
+    var expected = CartesianCoordinate.FromXYZ(1, 2.3, 4.5);
     var actual = CartesianCoordinate.Deserialize("cartesian|1|2.3|4.5");
     assertEquals(expected.getX(), actual.getX(), DELTA);
     assertEquals(expected.getY(), actual.getY(), DELTA);
@@ -40,8 +54,8 @@ public class CartesianCoordinateTest {
 
   @Test
   public void isEqual() {
-    var a = new CartesianCoordinate(1, 2, 3);
-    var b = new CartesianCoordinate(1, 2, 3);
+    var a = CartesianCoordinate.FromXYZ(1, 2, 3);
+    var b = CartesianCoordinate.FromXYZ(1, 2, 3);
     assertTrue(a.isEqual(b));
     assertTrue(b.isEqual(a));
 
@@ -50,8 +64,8 @@ public class CartesianCoordinateTest {
 
   @Test
   public void isNotEqual() {
-    var a = new CartesianCoordinate(1, 2, 3);
-    var b = new CartesianCoordinate(1, 2, 4);
+    var a = CartesianCoordinate.FromXYZ(1, 2, 3);
+    var b = CartesianCoordinate.FromXYZ(1, 2, 4);
     assertFalse(a.isEqual(b));
     assertFalse(b.isEqual(a));
   }
@@ -59,8 +73,8 @@ public class CartesianCoordinateTest {
   @SuppressWarnings("SimplifiableAssertion")
   @Test
   public void equals() {
-    var a = new CartesianCoordinate(1, 2, 3);
-    var b = new CartesianCoordinate(1, 2, 3);
+    var a = CartesianCoordinate.FromXYZ(1, 2, 3);
+    var b = CartesianCoordinate.FromXYZ(1, 2, 3);
     assertTrue(a.equals(b));
     assertTrue(b.equals(a));
 
@@ -70,8 +84,8 @@ public class CartesianCoordinateTest {
   @SuppressWarnings("SimplifiableAssertion")
   @Test
   public void notEquals() {
-    var a = new CartesianCoordinate(1, 2, 3);
-    var b = new CartesianCoordinate(1, 2, 4);
+    var a = CartesianCoordinate.FromXYZ(1, 2, 3);
+    var b = CartesianCoordinate.FromXYZ(1, 2, 4);
     assertFalse(a.equals(b));
     assertFalse(b.equals(a));
   }
@@ -79,25 +93,25 @@ public class CartesianCoordinateTest {
   @SuppressWarnings({"SimplifiableAssertion", "EqualsBetweenInconvertibleTypes"})
   @Test
   public void notEqualsWrongType() {
-    var a = new CartesianCoordinate(1, 2, 3);
-    var b = new Location(new CartesianCoordinate(1, 2, 4));
+    var a = CartesianCoordinate.FromXYZ(1, 2, 3);
+    var b = new Location(CartesianCoordinate.FromXYZ(1, 2, 4));
     assertFalse(a.equals(b));
     assertFalse(b.equals(a));
   }
 
   @Test
   public void getDistance1() {
-    var a = new CartesianCoordinate(1, 2, 3);
-    var b = new CartesianCoordinate(1, 2, 3);
+    var a = CartesianCoordinate.FromXYZ(1, 2, 3);
+    var b = CartesianCoordinate.FromXYZ(1, 2, 3);
     assertEquals(a.getCartesianDistance(b), 0, DELTA);
   }
 
   @Test
   public void getDistance2() {
-    var a = new CartesianCoordinate(0, 0, 0);
-    var b = new CartesianCoordinate(1, 0, 0);
-    var c = new CartesianCoordinate(0, 1, 0);
-    var d = new CartesianCoordinate(0, 0, 1);
+    var a = CartesianCoordinate.FromXYZ(0, 0, 0);
+    var b = CartesianCoordinate.FromXYZ(1, 0, 0);
+    var c = CartesianCoordinate.FromXYZ(0, 1, 0);
+    var d = CartesianCoordinate.FromXYZ(0, 0, 1);
     assertEquals(a.getCartesianDistance(b), 1, DELTA);
     assertEquals(a.getCartesianDistance(c), 1, DELTA);
     assertEquals(a.getCartesianDistance(d), 1, DELTA);
@@ -105,13 +119,13 @@ public class CartesianCoordinateTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void getDistanceNull() {
-    var a = new CartesianCoordinate(0, 0, 0);
+    var a = CartesianCoordinate.FromXYZ(0, 0, 0);
     a.getCartesianDistance(null);
   }
 
   @Test
   public void testAsSpheric() {
-    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758);
+    var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758);
     var spherical = new SphericCoordinate(0.5, 1.3, 1);
 
     assertTrue(cartesian.asSphericCoordinate().isEqual(spherical));

@@ -39,7 +39,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     double y = radius * Math.sin(theta) * Math.sin(phi);
     double z = radius * Math.cos(theta);
 
-    return new CartesianCoordinate(x, y, z);
+    return CartesianCoordinate.FromXYZ(x, y, z);
   }
 
   @NotNull

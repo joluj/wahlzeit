@@ -2,7 +2,15 @@ package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
+
 public class CartesianCoordinate extends AbstractCoordinate {
+  /**
+   * Contains all instances of the {@link CartesianCoordinate}.
+   * Made protected only for testing.
+   */
+  protected static final WeakHashMap<CartesianCoordinate, WeakReference<CartesianCoordinate>> instances = new WeakHashMap<>();
 
   /**
    * Default allowed distance (in meters).
@@ -26,12 +34,31 @@ public class CartesianCoordinate extends AbstractCoordinate {
    * Creates a Coordinate following the cartesian scheme (with center of earth = [0,0,0]).
    * The params are in meters.
    */
-  public CartesianCoordinate(double x, double y, double z) {
+  private CartesianCoordinate(double x, double y, double z) {
     this.x = x;
     this.y = y;
     this.z = z;
 
     this.assertClassInvariants();
+  }
+
+  public static CartesianCoordinate FromXYZ(double x, double y, double z) {
+    // create a new coordinate object
+    var coordinate = new CartesianCoordinate(x, y, z);
+
+    // this will return the currently cached coordinate, or the new value if it does not already exist.
+    var weakRef = instances.get(coordinate);
+    if (weakRef == null) {
+      weakRef = new WeakReference<>(coordinate);
+      instances.put(coordinate, weakRef);
+    }
+
+    // post-condition
+    var returnValue = weakRef.get();
+    assert returnValue != null;
+
+    return returnValue;
+
   }
 
   /**
@@ -44,7 +71,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
   public static CartesianCoordinate Deserialize(String coordinate) {
     if (coordinate == null || coordinate.isEmpty()) {
       // Coordinate is empty / not initialized
-      return new CartesianCoordinate(0, 0, 0);
+      return CartesianCoordinate.FromXYZ(0, 0, 0);
     }
 
     String[] parts = coordinate.split("\\|");
@@ -58,7 +85,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
       double y = Double.parseDouble(parts[2]);
       double z = Double.parseDouble(parts[3]);
 
-      return new CartesianCoordinate(x, y, z);
+      return CartesianCoordinate.FromXYZ(x, y, z);
     } catch (NullPointerException | NumberFormatException e) {
       // Catch Exceptions and rethrow as IllegalArgumentException to match JavaDoc.
       throw new IllegalArgumentException("Incorrect String representation.", e);

@@ -92,7 +92,7 @@ public class SphericCoordinateTest {
   @Test
   public void testAsCartesian() {
     var spherical = new SphericCoordinate(0.5, 1.3, 1);
-    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758);
+    var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758);
 
     assertTrue(spherical.isEqual(cartesian));
     assertTrue(spherical.asCartesianCoordinate().isEqual(cartesian));
@@ -102,7 +102,7 @@ public class SphericCoordinateTest {
   public void testEqualsMethod() {
     // Checks interchangeability of different coordinate types
     var spherical = new SphericCoordinate(0.5, 1.3, 1);
-    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758);
+    var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758);
 
     //noinspection AssertBetweenInconvertibleTypes
     assertEquals(spherical, cartesian);
@@ -114,7 +114,7 @@ public class SphericCoordinateTest {
   public void testHashCodeMethod() {
     // Checks interchangeability of different coordinate types
     var spherical = new SphericCoordinate(0.5, 1.3, 1);
-    var cartesian = new CartesianCoordinate(0.12825, 0.46195, 0.87758); // Same Point
+    var cartesian = CartesianCoordinate.FromXYZ(0.12825, 0.46195, 0.87758); // Same Point
 
     assertEquals(spherical.hashCode(), cartesian.hashCode());
   }
