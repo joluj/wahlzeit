@@ -135,6 +135,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
   @Override
   protected double doGetCartesianDistance(@NotNull CartesianCoordinate other) {
+    if (this == other) return 0;
+    
     double x = this.x - other.x;
     double y = this.y - other.y;
     double z = this.z - other.z;

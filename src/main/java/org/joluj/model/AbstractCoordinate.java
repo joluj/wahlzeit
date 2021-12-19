@@ -105,6 +105,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 
   @Override
   public final boolean equals(Object other) {
+    if (other == this) {
+      return true;
+    }
     if (other instanceof Coordinate) {
       return this.asCartesianCoordinate().isEqual((Coordinate) other);
     }
