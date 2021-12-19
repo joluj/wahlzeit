@@ -469,6 +469,10 @@ public class Photo extends DataObject {
    * @methodtype set
    */
   public void setLocation(Location newLocation) {
+    if (this.location == null && newLocation == null) return; // no change
+    if (this.location != null && this.location.equals(newLocation)) return; // no change
+
+    // this.location != newLocation
     this.location = newLocation;
     incWriteCount();
   }

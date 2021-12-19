@@ -30,4 +30,17 @@ public class Location {
   public String serialize() {
     return this.coordinate.serialize();
   }
+
+  @Override
+  public int hashCode() {
+    return this.coordinate.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Location) {
+      return this.coordinate.equals(((Location) obj).coordinate);
+    }
+    return false;
+  }
 }
