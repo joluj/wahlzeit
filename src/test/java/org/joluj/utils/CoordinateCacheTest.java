@@ -44,7 +44,7 @@ public class CoordinateCacheTest {
     // Clear garbage
     System.gc();
     // Assert that there is exactly one instance left
-    await().atMost(10, TimeUnit.SECONDS).until(() -> cache.size() == 1);
+    await().atMost(30, TimeUnit.SECONDS).until(() -> cache.size() == 1);
 
     // Assert that it still contains the right object
     assertFalse(cache.containsKey(new ExampleObject(2)));
