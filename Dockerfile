@@ -1,7 +1,7 @@
 #########################################################
 # First stage: image to build the application           #
 #########################################################
-FROM adoptopenjdk/openjdk11-openj9:alpine-slim as builder
+FROM openjdk:11-slim as builder
 
 WORKDIR /builder
 
@@ -18,7 +18,7 @@ COPY gradlew /builder/gradlew
 # Test project
 RUN ./gradlew test
 
-# Build project 
+# Build project
 RUN ./gradlew assemble
 
 #########################################################
