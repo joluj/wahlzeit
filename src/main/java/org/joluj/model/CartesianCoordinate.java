@@ -48,7 +48,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
    * Uses #equals and #hashCode to compare the equality of the objects.
    */
   public static CartesianCoordinate FromXYZ(double x, double y, double z) {
-    return CartesianCoordinate.instances.getOrSet(new CartesianCoordinate(x, y, z));
+    synchronized (CartesianCoordinate.instances) {
+      return CartesianCoordinate.instances.getOrSet(new CartesianCoordinate(x, y, z));
+    }
   }
 
   /**
@@ -136,7 +138,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
   @Override
   protected double doGetCartesianDistance(@NotNull CartesianCoordinate other) {
     if (this == other) return 0;
-    
+
     double x = this.x - other.x;
     double y = this.y - other.y;
     double z = this.z - other.z;

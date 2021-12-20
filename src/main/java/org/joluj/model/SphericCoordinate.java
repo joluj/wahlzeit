@@ -46,7 +46,9 @@ public class SphericCoordinate extends AbstractCoordinate {
    * Uses #equals and #hashCode to compare the equality of the objects.
    */
   public static SphericCoordinate FromPhiThetaRadius(double phi, double theta, double radius) {
-    return SphericCoordinate.instances.getOrSet(new SphericCoordinate(phi, theta, radius));
+    synchronized (SphericCoordinate.instances) {
+      return SphericCoordinate.instances.getOrSet(new SphericCoordinate(phi, theta, radius));
+    }
   }
 
 
