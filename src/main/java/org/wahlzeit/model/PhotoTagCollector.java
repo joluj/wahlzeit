@@ -7,15 +7,20 @@ package org.wahlzeit.model;
 
 import java.util.*;
 
+import org.joluj.utils.PatternInstance;
 import org.wahlzeit.utils.*;
 
 /**
  * A PhotoTagCollector provides a method to collect all tags for a given photo.
  */
+@PatternInstance(
+		patternName = "Abstract Factory",
+		participants = {"AbstractProduct", "ConcreteProduct"}
+)
 public class PhotoTagCollector {
 
 	/**
-	 * 
+	 *
 	 */
 	public void collect(Set<String> tags, Photo photo) {
 		String ownerName = photo.getOwnerName();
@@ -30,5 +35,5 @@ public class PhotoTagCollector {
 			tags.add("tg:" + photoTags[i]);
 		}
 	}
-	
+
 }

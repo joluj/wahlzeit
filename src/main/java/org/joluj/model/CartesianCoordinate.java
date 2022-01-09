@@ -2,7 +2,11 @@ package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.joluj.utils.CoordinateCache;
+import org.joluj.utils.PatternInstance;
 
+@PatternInstance(
+    patternName = "Multiton"
+)
 public class CartesianCoordinate extends AbstractCoordinate {
   /**
    * Contains all instances of the {@link CartesianCoordinate}.

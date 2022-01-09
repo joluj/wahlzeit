@@ -1,6 +1,7 @@
 package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
+import org.joluj.utils.PatternInstance;
 
 /**
  * Provides default delegations of several methods by converting the object to a
@@ -8,6 +9,11 @@ import org.jetbrains.annotations.NotNull;
  * For coordinate-type specific methods like {@link #getCentralAngle}, the object
  * gets converted to the respective special implementation.
  */
+@PatternInstance(
+    patternName = "Template Method",
+    participants = {"Abstract Class", "Concrete Class"},
+    description = "#getCartesianDistance and #getCentralAngle with primitive methods assertClassInvariants, doGetCartesianDistance, doGetCentralAngle"
+)
 public abstract class AbstractCoordinate implements Coordinate {
 
   @Override

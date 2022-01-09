@@ -12,12 +12,17 @@ import org.jetbrains.annotations.NotNull;
 import org.joluj.model.AssertionHelper;
 import org.joluj.model.Location;
 import org.joluj.model.exceptions.SqlParseException;
+import org.joluj.utils.PatternInstance;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
 
 /**
  * A photo represents a user-provided (uploaded) photo.
  */
+@PatternInstance(
+    patternName = "Abstract Factory",
+    participants = {"AbstractProduct", "ConcreteProduct"}
+)
 public class Photo extends DataObject {
 
   /**

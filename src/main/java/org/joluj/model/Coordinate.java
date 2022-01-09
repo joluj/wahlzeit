@@ -2,7 +2,13 @@ package org.joluj.model;
 
 
 import org.jetbrains.annotations.NotNull;
+import org.joluj.utils.PatternInstance;
 
+@PatternInstance(
+    patternName = "Factory Method",
+    participants = {"AbstractCreator", "ConcreteCreator", "AbstractProduct"},
+    description = "Method #Deserialize"
+)
 public interface Coordinate {
   /**
    * @return not null

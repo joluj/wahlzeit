@@ -11,12 +11,16 @@ import java.util.*;
 
 import org.jetbrains.annotations.NotNull;
 import org.joluj.model.HolidayPhotoManager;
+import org.joluj.utils.PatternInstance;
 import org.wahlzeit.main.*;
 import org.wahlzeit.services.*;
 
 /**
  * A photo manager provides access to and manages photos.
  */
+@PatternInstance(
+    patternName = "Singleton"
+)
 public class PhotoManager extends ObjectManager {
 
   /**

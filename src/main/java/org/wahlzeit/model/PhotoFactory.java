@@ -9,11 +9,19 @@ import java.sql.*;
 
 import org.jetbrains.annotations.NotNull;
 import org.joluj.model.HolidayPhotoFactory;
+import org.joluj.utils.PatternInstance;
 import org.wahlzeit.services.*;
 
 /**
  * An Abstract Factory for creating photos and related objects.
  */
+@PatternInstance(
+    patternName = "Abstract Factory",
+    participants = {"AbstractFactory", "ConcreteFactory"}
+)
+@PatternInstance(
+    patternName = "Singleton"
+)
 public class PhotoFactory {
 
   /**
