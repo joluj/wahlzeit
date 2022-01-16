@@ -2,6 +2,8 @@ package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joluj.model.holiday.Holiday;
+import org.joluj.model.holiday.HolidayManager;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.services.SysLog;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 public class HolidayPhoto extends Photo {
 
   @Nullable
-  private String country;
+  private Holiday holiday;
 
   /**
    * @methodtype constructor
@@ -36,12 +38,12 @@ public class HolidayPhoto extends Photo {
   }
 
   @Nullable
-  public String getCountry() {
-    return country;
+  public Holiday getHoliday() {
+    return holiday;
   }
 
-  protected void setCountry(@Nullable String country) {
-    this.country = country;
+  protected void setHoliday(@Nullable Holiday holiday) {
+    this.holiday = holiday;
     incWriteCount();
   }
 
@@ -52,7 +54,7 @@ public class HolidayPhoto extends Photo {
     super.readFrom(rset);
 
     // New attributes for *Holiday*Photo
-    country = rset.getString("country");
+    this.holiday = HolidayManager.getInstance().getOrCreateHoliday(rset);
   }
 
   @Override
@@ -61,6 +63,8 @@ public class HolidayPhoto extends Photo {
     super.writeOn(rset);
 
     // New attributes for *Holiday*Photo
-    rset.updateString("country", country);
+    if (this.holiday != null) {
+      this.holiday.writeOn(rset);
+    }
   }
 }

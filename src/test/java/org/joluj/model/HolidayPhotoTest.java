@@ -1,6 +1,7 @@
 package org.joluj.model;
 
-import org.joluj.model.exceptions.SqlParseException;
+import org.joluj.model.holiday.Holiday;
+import org.joluj.model.holiday.HolidayManager;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.wahlzeit.model.PhotoStatus;
@@ -19,10 +20,10 @@ import static org.junit.Assert.*;
 public class HolidayPhotoTest {
 
   @Test
-  public void isDirtyCountry() {
+  public void isDirtyAfterSetHoliday() throws SQLException {
     var photo = new HolidayPhoto();
 
-    photo.setCountry("North Korea");
+    photo.setHoliday(createHolidayWithCountry("North Korea"));
     assertTrue(photo.isDirty());
   }
 
@@ -37,15 +38,16 @@ public class HolidayPhotoTest {
     var photo = new HolidayPhoto(resultSet);
 
     assertFalse(photo.isDirty());
-    assertEquals(photo.getCountry(), "China");
+    assertEquals(photo.getHoliday().getCountry(), "China");
   }
 
   @Test
   public void writeTo() throws SQLException, MalformedURLException {
+
     // prepare
     ResultSet resultSet = Mockito.mock(ResultSet.class);
     var photo = new HolidayPhoto();
-    photo.setCountry("USA");
+    photo.setHoliday(createHolidayWithCountry("USA"));
     // other fields without null checks in {@link Photo#writeOn}
     photo.setOwnerEmailAddress(EmailAddress.EMPTY);
     photo.setOwnerHomePage(new URL("https://example.com"));
@@ -58,6 +60,13 @@ public class HolidayPhotoTest {
 
     // assert
     Mockito.verify(resultSet, Mockito.times(1)).updateString("country", "USA");
+  }
+
+  public Holiday createHolidayWithCountry(String country) throws SQLException {
+    ResultSet resultSet = Mockito.mock(ResultSet.class);
+    Mockito.when(resultSet.getString(Holiday.HolidaySqlKeys.COUNTRY)).thenReturn(country);
+
+    return HolidayManager.getInstance().getOrCreateHoliday(resultSet);
   }
 
 }
