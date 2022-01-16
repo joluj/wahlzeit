@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class HolidayType {
 
-  private final static String SQL_KEY = "holidayType";
+  public final static String SQL_KEY = "holidayType";
 
   @NotNull
   private final String type;

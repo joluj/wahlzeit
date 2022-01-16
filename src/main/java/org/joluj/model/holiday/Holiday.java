@@ -3,6 +3,7 @@ package org.joluj.model.holiday;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joluj.model.AssertionHelper;
+import org.joluj.model.exceptions.SqlParseException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,7 +79,11 @@ public class Holiday {
       return null;
     }
 
-    return new Holiday(country, type, startDate, endDate);
+    try {
+      return new Holiday(country, type, startDate, endDate);
+    } catch (IllegalArgumentException e) {
+      throw new SQLException(e);
+    }
   }
 
   public void writeOn(@NotNull ResultSet resultSet) throws SQLException {
