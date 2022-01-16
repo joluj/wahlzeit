@@ -33,7 +33,12 @@ CREATE TABLE photos
     no_votes                  integer,
     creation_time             bigint,
     location                  text,
-    country                   text
+
+--     HolidayPhoto specific columns
+    country                   text,
+    startDate                 text,
+    endDate                   text,
+    holidayType               text
 );
 
 CREATE TABLE tags
