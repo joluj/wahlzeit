@@ -51,11 +51,11 @@ public class HolidayTypeTest {
 
   @Test
   public void testSubtype() {
-    var a = new HolidayType("A");
-    var b = new HolidayType(a, "B");
+    var a = new HolidayType("A"); // "A"
+    var b = new HolidayType(a, "B"); // "A / B" -> is subtype of a
 
-    assertTrue(a.isSubtypeOf(b));
-    assertFalse(b.isSubtypeOf(a));
+    assertFalse(a.isSubtypeOf(b));
+    assertTrue(b.isSubtypeOf(a));
   }
 
   @Test

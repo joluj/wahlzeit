@@ -52,7 +52,7 @@ public class HolidayType {
   public boolean isSubtypeOf(@NotNull HolidayType other) {
     AssertionHelper.AssertNotNull(other);
 
-    return other.type.startsWith(this.type);
+    return this.type.startsWith(other.type);
   }
 
   @Override
