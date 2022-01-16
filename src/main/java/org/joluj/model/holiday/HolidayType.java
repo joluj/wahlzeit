@@ -32,7 +32,7 @@ public class HolidayType {
 
   protected static HolidayType ReadFrom(@NotNull ResultSet resultSet) throws SQLException {
     var typeAsString = resultSet.getString(SQL_KEY);
-    if (typeAsString == null) typeAsString = "";
+    if (typeAsString == null || typeAsString.isBlank()) return new NullHolidayType();
 
     return new HolidayType(typeAsString);
   }
