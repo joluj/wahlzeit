@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Subtypes are created
+ */
 public class HolidayType {
 
   public final static String SQL_KEY = "holidayType";
@@ -18,6 +21,13 @@ public class HolidayType {
     AssertionHelper.AssertNotNull(type);
 
     this.type = type;
+  }
+
+  protected HolidayType(@NotNull HolidayType parent, @NotNull String type) {
+    AssertionHelper.AssertNotNull(parent);
+    AssertionHelper.AssertNotNull(type);
+
+    this.type = parent.getType() + " / " + type;
   }
 
   protected static HolidayType ReadFrom(@NotNull ResultSet resultSet) throws SQLException {
@@ -34,6 +44,15 @@ public class HolidayType {
   @NotNull
   public String getType() {
     return type;
+  }
+
+  /**
+   * Returns true iff this is a subtype of other
+   */
+  public boolean isSubtypeOf(@NotNull HolidayType other) {
+    AssertionHelper.AssertNotNull(other);
+
+    return other.type.startsWith(this.type);
   }
 
   @Override

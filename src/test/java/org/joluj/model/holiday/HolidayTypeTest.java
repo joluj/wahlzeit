@@ -1,14 +1,12 @@
 package org.joluj.model.holiday;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class HolidayTypeTest {
 
@@ -34,4 +32,30 @@ public class HolidayTypeTest {
 
     Mockito.verify(output, Mockito.times(1)).updateString(HolidayType.SQL_KEY, "Urlaub 1789");
   }
+
+  @Test
+  public void testSubtype() {
+    var a = new HolidayType("A");
+    var b = new HolidayType(a, "B");
+
+    assertTrue(a.isSubtypeOf(b));
+    assertFalse(b.isSubtypeOf(a));
+  }
+
+  @Test
+  public void testSubtype_Self() {
+    var a = new HolidayType("A");
+
+    assertTrue(a.isSubtypeOf(a));
+  }
+
+  @Test
+  public void testNotSubtype() {
+    var a = new HolidayType("A");
+    var b = new HolidayType("B");
+
+    assertFalse(a.isSubtypeOf(b));
+    assertFalse(b.isSubtypeOf(a));
+  }
+
 }
