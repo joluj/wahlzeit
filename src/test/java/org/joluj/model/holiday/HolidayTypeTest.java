@@ -34,6 +34,22 @@ public class HolidayTypeTest {
   }
 
   @Test
+  public void testEqualsAndHashCode() throws SQLException {
+    ResultSet resultSet = Mockito.mock(ResultSet.class);
+    Mockito.when(resultSet.getString(HolidayType.SQL_KEY)).thenReturn("Urlaub 1789");
+
+    var a = HolidayType.ReadFrom(resultSet);
+    var b = HolidayType.ReadFrom(resultSet);
+
+    assertNotNull(a);
+    assertNotNull(b);
+
+    assertNotSame(a, b); // Same only if created with the HolidayManager
+    assertEquals(a.hashCode(), b.hashCode());
+    assertEquals(a, b);
+  }
+
+  @Test
   public void testSubtype() {
     var a = new HolidayType("A");
     var b = new HolidayType(a, "B");

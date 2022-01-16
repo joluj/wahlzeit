@@ -30,6 +30,13 @@ public class HolidayManager {
   }
 
   @NotNull
+  public HolidayType getOrCreateHolidayType(@NotNull ResultSet resultSet) throws SQLException {
+    synchronized (holidayTypes) {
+      return holidayTypes.getOrSet(HolidayType.ReadFrom(resultSet));
+    }
+  }
+
+  @NotNull
   public HolidayType getOrCreateHolidayType(@NotNull String type) {
     synchronized (holidayTypes) {
       return holidayTypes.getOrSet(new HolidayType(type));

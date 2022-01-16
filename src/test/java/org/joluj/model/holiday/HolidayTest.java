@@ -1,12 +1,10 @@
 package org.joluj.model.holiday;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Month;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 

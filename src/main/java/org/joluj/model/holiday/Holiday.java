@@ -3,7 +3,6 @@ package org.joluj.model.holiday;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joluj.model.AssertionHelper;
-import org.joluj.model.exceptions.SqlParseException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Holiday {
 
@@ -50,7 +50,7 @@ public class Holiday {
     var country = resultSet.getString(HolidaySqlKeys.COUNTRY);
 
     // Parse type
-    var type = HolidayType.ReadFrom(resultSet);
+    var type = HolidayManager.getInstance().getOrCreateHolidayType(resultSet);
 
     // Parse start date
     Date startDate = null;

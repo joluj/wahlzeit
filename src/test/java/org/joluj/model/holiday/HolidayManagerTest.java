@@ -57,4 +57,15 @@ public class HolidayManagerTest {
 
     assertSame(a, b);
   }
+
+  @Test
+  public void testHolidaySubType_SameObject() {
+    var a = manager.getOrCreateHolidayType("A");
+
+    var b1 = manager.getOrCreateHolidaySubType(a, "B");
+    var b2 = manager.getOrCreateHolidaySubType(a, "B");
+
+    assertTrue(b1.isSubtypeOf(a));
+    assertSame(b1, b2);
+  }
 }

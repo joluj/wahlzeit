@@ -34,7 +34,7 @@ public class HolidayType {
     var typeAsString = resultSet.getString(SQL_KEY);
     if (typeAsString == null) typeAsString = "";
 
-    return HolidayManager.getInstance().getOrCreateHolidayType(typeAsString);
+    return new HolidayType(typeAsString);
   }
 
   public void writeOn(@NotNull ResultSet resultSet) throws SQLException {
