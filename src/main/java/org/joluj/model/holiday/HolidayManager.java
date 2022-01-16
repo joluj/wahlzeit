@@ -3,7 +3,7 @@ package org.joluj.model.holiday;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joluj.model.AssertionHelper;
-import org.joluj.utils.CoordinateCache;
+import org.joluj.utils.SimpleCache;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +12,9 @@ public class HolidayManager {
 
   private static final HolidayManager instance = new HolidayManager();
 
-  protected static final CoordinateCache<Holiday> holidays = new CoordinateCache<>();
+  protected static final SimpleCache<Holiday> holidays = new SimpleCache<>();
 
-  protected static final CoordinateCache<HolidayType> holidayTypes = new CoordinateCache<>();
+  protected static final SimpleCache<HolidayType> holidayTypes = new SimpleCache<>();
 
   public static HolidayManager getInstance() {
     return instance;

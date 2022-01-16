@@ -1,7 +1,7 @@
 package org.joluj.model;
 
 import org.jetbrains.annotations.NotNull;
-import org.joluj.utils.CoordinateCache;
+import org.joluj.utils.SimpleCache;
 import org.joluj.utils.PatternInstance;
 
 @PatternInstance(
@@ -11,7 +11,7 @@ public class SphericCoordinate extends AbstractCoordinate {
   /**
    * Contains all instances of the {@link SphericCoordinate}.
    */
-  protected static final CoordinateCache<SphericCoordinate> instances = new CoordinateCache<>();
+  protected static final SimpleCache<SphericCoordinate> instances = new SimpleCache<>();
 
   /**
    * 0 <= phi <= 2*PI

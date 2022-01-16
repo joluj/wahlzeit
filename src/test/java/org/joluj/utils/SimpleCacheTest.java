@@ -7,14 +7,14 @@ import java.util.concurrent.TimeUnit;
 import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
-public class CoordinateCacheTest {
+public class SimpleCacheTest {
   /**
    * Asserts that multiple "new" coordinates are actually the same object,
    * not just equal.
    */
   @Test
   public void testSameObject() {
-    var cache = new CoordinateCache<ExampleObject>();
+    var cache = new SimpleCache<ExampleObject>();
 
     // just for showcase: they equal, but are not the same
     assertEquals(new ExampleObject(1), new ExampleObject(1));
@@ -31,7 +31,7 @@ public class CoordinateCacheTest {
    */
   @Test
   public void testSameObject_AfterGarbageCollector() {
-    var cache = new CoordinateCache<>();
+    var cache = new SimpleCache<>();
     var a = cache.getOrSet(new ExampleObject(1));
     var b = cache.getOrSet(new ExampleObject(2));
     assertNotEquals(a, b); // Just to make sure that these are different objects

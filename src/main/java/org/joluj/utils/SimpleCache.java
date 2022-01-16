@@ -6,13 +6,13 @@ import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
 
 /**
- * Cache for coordinates, which gets cleared up regularly through the garbage collector.
- * I.e., if there is no reference to an instance of the coordinate (except in the cache),
+ * Cache for objects, which gets cleared up regularly through the garbage collector.
+ * I.e., if there is no reference to an instance of the object (except in the cache),
  * the coordinate will be cleared automatically.
  * <p>
- * Uses the #equals and #hashMap method.
+ * Uses the #equals and #hashMap methods to check objects for equality.
  */
-public class CoordinateCache<T> {
+public class SimpleCache<T> {
   private final WeakHashMap<T, WeakReference<T>> instances = new WeakHashMap<>();
 
   /**
