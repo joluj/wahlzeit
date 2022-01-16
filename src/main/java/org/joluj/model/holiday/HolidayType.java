@@ -47,12 +47,27 @@ public class HolidayType {
   }
 
   /**
-   * Returns true iff this is a subtype of other
+   * Returns true iff this is a subtype of other.
+   * A type is considered a subtype of itself.
+   * <p>
+   * Example with movies:
+   * <ul>
+   *   <li> Movie
+   *     <ul>
+   *       <li>Action Movie </li>
+   *       <li>Comedy Movie </li>
+   *     </ul>
+   *   </li>
+   * </ul>
+   * <p>
+   * "Movie" is subtype of "Action Movie": false <br>
+   * "Action Movie" is subtype of "Movie": true <br>
+   * "Action Movie" is subtype of "Action Movie": true <br>
    */
   public boolean isSubtypeOf(@NotNull HolidayType other) {
     AssertionHelper.AssertNotNull(other);
 
-    return this.type.startsWith(other.type);
+    return this.type.equals(other.type) || (this.type + " / ").startsWith(other.type);
   }
 
   @Override
