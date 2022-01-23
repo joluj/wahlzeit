@@ -53,9 +53,13 @@ public class HolidayTypeTest {
   public void testSubtype() {
     var a = new HolidayType("A"); // "A"
     var b = new HolidayType(a, "B"); // "A / B" -> is subtype of a
+    var c = new HolidayType(b, "C"); // "A / B / C" -> is subtype of a and b
 
     assertFalse(a.isSubtypeOf(b));
     assertTrue(b.isSubtypeOf(a));
+
+    assertTrue(c.isSubtypeOf(b));
+    assertTrue(c.isSubtypeOf(a));
   }
 
   @Test
@@ -74,4 +78,15 @@ public class HolidayTypeTest {
     assertFalse(b.isSubtypeOf(a));
   }
 
+  @Test
+  public void testSubtypeSubstring() {
+    var a = new HolidayType("A"); // "A"
+    var b1 = new HolidayType(a, "B");
+    var b2 = new HolidayType(a, "B2");
+
+    assertTrue(b1.isSubtypeOf(a));
+    assertTrue(b2.isSubtypeOf(a));
+
+    assertFalse(b2.isSubtypeOf(b1));
+  }
 }
