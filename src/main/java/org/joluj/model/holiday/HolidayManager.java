@@ -23,7 +23,7 @@ public class HolidayManager {
   @Nullable
   public Holiday getOrCreateHoliday(ResultSet resultSet) throws SQLException {
     synchronized (holidays) {
-      var holiday = Holiday.ReadFrom(resultSet);
+      var holiday = Holiday.ReadFrom(resultSet); // domain class creation 2
       if (holiday == null) return null;
       return holidays.getOrSet(holiday);
     }

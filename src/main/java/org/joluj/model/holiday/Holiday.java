@@ -80,7 +80,7 @@ public class Holiday {
     }
 
     try {
-      return new Holiday(country, type, startDate, endDate);
+      return new Holiday(country, type, startDate, endDate); // domain class creation 1
     } catch (IllegalArgumentException e) {
       throw new SQLException(e);
     }

@@ -340,7 +340,7 @@ public class PhotoManager extends ObjectManager {
    */
   public Photo createPhoto(File file) throws Exception {
     PhotoId id = PhotoId.getNextId();
-    Photo result = PhotoUtil.createPhoto(file, id);
+    Photo result = PhotoUtil.createPhoto(file, id); // photo class creation 3.2
     addPhoto(result);
     return result;
   }
